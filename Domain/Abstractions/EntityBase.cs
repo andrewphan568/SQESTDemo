@@ -2,11 +2,11 @@
 
 namespace Domain.Abstractions
 {
-    public interface IEntityBase
+    public class EntityBase : IEntityBase
     {
-        DateTime CreatedAtUtc { get; set; }
-        DateTime UpdatedAtUtc { get; set; }
-       // User CreatedBy { get; set; }
-       // User UpdatedBy { get; set; }
+        public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;    
+        public DateTime UpdatedAtUtc { get; set; }
+        /*public AppUser CreatedBy { get; set; }
+        public AppUser UpdatedBy { get; set; }*/
     }
 }
