@@ -7,16 +7,21 @@ namespace Domain.Moisture
     {
         public Guid Id { get; set; }
 
-        public Project Project { get; set; }
+/*      public Project Project { get; set; }
         public SourceMaterial SourceMaterial { get; set; }
         public Specification Specification { get; set; }
         public Sample Sample { get; set; }
-        public Preparation Preparation { get; set; }
+        public Preparation Preparation { get; set; }*/
+
+        public Guid? ProjectId { get; set; }
+        public Guid? SourceMaterialId { get; set; }
+        public Guid? SpecificationId { get; set; }
+        public Guid? SampleId { get; set; }
+        public Guid? PreparationId { get; set; }
         public string TareId { get; set; }
         public double TareMass { get; set; }
         public double TareAndMaterialWetMass { get; set; }
 
-        public BalanceEquipment DryMassBalance { get; set; }
         public double TareAndMaterialDryMass { get; set; }
         public double MaterialDryMass { get; set; }
 

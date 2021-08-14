@@ -13,4 +13,3 @@ namespace Domain
         public DateTime UpdatedAtUtc { get; set; }
     }
 }
-}
