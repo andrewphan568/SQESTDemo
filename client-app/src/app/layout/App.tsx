@@ -23,6 +23,7 @@ function App() {
               <Switch>
                 <Route exact path='/moistureContentList' component={MoistureContentList} />
                 <Route path='/moistureContentList/:id' component={MoistureContentDetails} />
+                <Route path='/createMoistureContent' component={MoistureContentDetails} />
                 <Route path='/notFound' component={NotFoundPage} />
                 <Route path='/badRequest' component={BadRequestPage} />
                 <Route component={NotFoundPage} />
@@ -31,7 +32,7 @@ function App() {
           </>
         )}
       />
-
+      <Footer />
     </>
   );
 }

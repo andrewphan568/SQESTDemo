@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Container, Menu, Image, Dropdown } from 'semantic-ui-react';
+import { Container, Menu, Image, Dropdown, Button } from 'semantic-ui-react';
+import { useStore } from '../../app/stores/store';
 
 export default function NavBar() {
-
+    const { moistureContentStore } = useStore();
+    const { setCreateMode } = moistureContentStore;
     return (
         <Menu inverted fixed='top'>
             <Container>
@@ -19,6 +21,13 @@ export default function NavBar() {
                             </Dropdown.Menu>
                         </Dropdown>
                     </Menu.Item>
+                </Menu.Item>
+                <Menu.Item>
+                    <Link to='/createMoistureContent'>
+                        <Button positive onClick={() => setCreateMode(true)} >
+                            Create Moisture Content Worksheet
+                        </Button>
+                    </Link>
                 </Menu.Item>
                 <Menu.Item position='right'>
                     <Image src={'/assets/user.png'} avatar spaced='right' />

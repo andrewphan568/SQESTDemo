@@ -1,46 +1,71 @@
-export interface Project {
-    createdAtUtc: Date;
-    updatedAtUtc: Date;
+export interface Specification {
     id: string;
     name: string;
     code: string;
-}
-
-export interface SourceMaterial {
     createdAtUtc: Date;
     updatedAtUtc: Date;
+}
+
+export class Specification implements Specification {
+    constructor(init?: Specification) {
+        Object.assign(this, init);
+    }
+}
+
+export interface Project {
+    id: string;
+    name: string;
+    code: string;
+    createdAtUtc: Date;
+    updatedAtUtc: Date;
+}
+
+export class Project implements Project {
+    constructor(init?: Project) {
+        Object.assign(this, init);
+    }
+}
+
+
+export interface SourceMaterial {
     id: string;
     sourceName: string;
     materialDesciption: string;
-}
-
-export interface Specification {
     createdAtUtc: Date;
     updatedAtUtc: Date;
-    id: string;
-    name: string;
-    code: string;
+}
+
+export class SourceMaterial implements SourceMaterial {
+    constructor(init?: SourceMaterial) {
+        Object.assign(this, init);
+    }
 }
 
 export interface Sample {
-    createdAtUtc: Date;
-    updatedAtUtc: Date;
     id: string;
     name: string;
     sampledBy: string;
     sampledDate: Date;
-    projectId: string;
+    project: Project;
+    createdAtUtc: Date;
+    updatedAtUtc: Date;
+}
+
+export class Sample implements Sample {
+    constructor(init?: Sample) {
+        Object.assign(this, init);
+    }
 }
 
 export interface Preparation {
-    createdAtUtc: Date;
-    updatedAtUtc: Date;
     id: string;
     method: string;
     dryingTemperature: number;
-    balanceId: string;
+    balance?: any;
     visualNomialPraticalSize: number;
-    materialExcluded: string;
+    materialExcluded?: any;
+    createdAtUtc: Date;
+    updatedAtUtc: Date;
 }
 
 export class Preparation implements Preparation {
@@ -49,13 +74,31 @@ export class Preparation implements Preparation {
     }
 }
 
+
+export interface StandardTestMethod {
+    id: string;
+    code: string;
+    name: string;
+    description: string;
+    createdAtUtc: Date;
+    updatedAtUtc: Date;
+}
+
+export class StandardTestMethod implements StandardTestMethod {
+    constructor(init?: StandardTestMethod) {
+        Object.assign(this, init);
+    }
+}
+
 export interface MoistureContent {
     id: string;
+    worksheetId: string;
     project: Project;
     sourceMaterial: SourceMaterial;
     specification: Specification;
     sample: Sample;
     preparation: Preparation;
+    standardTestMethod: StandardTestMethod;
     tareId: string;
     tareMass: number;
     tareAndMaterialWetMass: number;
@@ -67,7 +110,7 @@ export interface MoistureContent {
     selectMaterialExcluded: boolean;
     testerName: string;
     dateTested: Date;
-    remarks: string;
+    remarks?: any;
     checkerName: string;
     dateChecked: Date;
 }
@@ -77,11 +120,3 @@ export class MoistureContent implements MoistureContent {
         Object.assign(this, init);
     }
 }
-
-export interface Result {
-    isSuccess: boolean;
-    value: undefined;
-    error: string;
-}
-
-

@@ -43,6 +43,7 @@ namespace Application.MoistureContents
             {
                 var moistureContentDto = new MoistureContentDto();
                 _mapper.Map(moistureContent, moistureContentDto);
+                moistureContentDtoList.Add(moistureContentDto);
             }
 
             return Result<List<MoistureContentDto>>.Success(moistureContentDtoList);

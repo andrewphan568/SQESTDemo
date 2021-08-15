@@ -24,8 +24,8 @@ export default function ResultsSegment({ waterContentPercentage, insufficientSam
                         </Form.Field>
                         <Header size="small">Report</Header>
                         <Form.Checkbox label='Insufficient Sample Mass' checked={insufficientSampleMass} onChange={(e, value) => changeInfo(value, "selectInsufficientSampleMass")} />
-                        <Form.Checkbox label='Drying Temperature' checked={dryingTemperature}  onChange={(e, value) => changeInfo(value, "selectDryingTemperature")}/>
-                        <Form.Checkbox label='Material Excluded' checked={materialExcluded} onChange={(e, value) => changeInfo(value, "selectMaterialExcluded")}/>
+                        <Form.Checkbox label='Drying Temperature' checked={dryingTemperature} onChange={(e, value) => changeInfo(value, "selectDryingTemperature")} />
+                        <Form.Checkbox label='Material Excluded' checked={materialExcluded} onChange={(e, value) => changeInfo(value, "selectMaterialExcluded")} />
                     </Grid.Column>
                 </Grid>
             </Segment>

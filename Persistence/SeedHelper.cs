@@ -11,13 +11,13 @@ namespace Persistence
     public class SeedHelper
     {
         public static async Task SeedData(DataContext context)
-            
+
         {
             if (!context.MoistureContents.Any())
             {
                 var project1 = new Project()
                 {
-                    Id = new Guid("8606b885-bde6-4572-8c75-9e714858cf67"),
+                    Id = Guid.NewGuid(),
                     Name = "Adelaide Agriculture",
                     Code = "AAA123",
                     CreatedAtUtc = new DateTime(2021, 08, 15),
@@ -25,7 +25,7 @@ namespace Persistence
                 };
                 var project2 = new Project()
                 {
-                    Id = new Guid("7c71d143-1cd8-4bc0-a963-3fefb9062392"),
+                    Id = Guid.NewGuid(),
                     Name = "Brisbane Agriculture",
                     Code = "BBA456",
                     CreatedAtUtc = new DateTime(2021, 08, 15),
@@ -34,7 +34,7 @@ namespace Persistence
 
                 var project3 = new Project()
                 {
-                    Id = new Guid("bc12fad7-c35a-45fb-8eac-4d2c8bbfc0bf"),
+                    Id = Guid.NewGuid(),
                     Name = "Sydney Agriculture",
                     Code = "SDA426",
                     CreatedAtUtc = new DateTime(2021, 08, 15),
@@ -43,7 +43,7 @@ namespace Persistence
 
                 var project4 = new Project()
                 {
-                    Id = new Guid("d1b4356a-b347-439b-ac6b-84c106f1cd3b"),
+                    Id = Guid.NewGuid(),
                     Name = "Hobart Agriculture",
                     Code = "HOA426",
                     CreatedAtUtc = new DateTime(2021, 08, 15),
@@ -52,7 +52,7 @@ namespace Persistence
 
                 var balanceEquipment1 = new BalanceEquipment()
                 {
-                    Id = new Guid("cafedcbd-be90-45d7-923e-ce1b2a1563a5"),
+                    Id = Guid.NewGuid(),
                     Name = "Balance 1",
                     Code = "01BAL",
                     ManufactureDate = new DateTime(2021, 08, 15),
@@ -63,7 +63,7 @@ namespace Persistence
 
                 var balanceEquipment2 = new BalanceEquipment()
                 {
-                    Id = new Guid("0ce08113-7675-428e-be1f-d07de73c3b2d"),
+                    Id = Guid.NewGuid(),
                     Name = "Balance 2",
                     Code = "02BAL",
                     ManufactureDate = new DateTime(2021, 08, 15),
@@ -74,7 +74,7 @@ namespace Persistence
 
                 var ovenEquipment1 = new OvenEquipment()
                 {
-                    Id = new Guid("226b5d9f-3e75-4b6a-9d46-62725d947f90"),
+                    Id = Guid.NewGuid(),
                     Name = "Oven 1",
                     Code = "01OVN",
                     ManufactureDate = new DateTime(2021, 08, 15),
@@ -84,7 +84,7 @@ namespace Persistence
 
                 var ovenEquipment2 = new OvenEquipment()
                 {
-                    Id = new Guid("c0568854-58c4-4943-84a3-8bd4b82744ee"),
+                    Id = Guid.NewGuid(),
                     Name = "Oven 2",
                     Code = "02OVN",
                     ManufactureDate = new DateTime(2021, 08, 15),
@@ -94,7 +94,7 @@ namespace Persistence
 
                 var specification1 = new Specification()
                 {
-                    Id = new Guid("03e9993b-b782-4e84-81a9-f9489cb4a689"),
+                    Id = Guid.NewGuid(),
                     Name = "Specification 01",
                     Code = "01Spec",
                     CreatedAtUtc = new DateTime(2021, 08, 15),
@@ -103,7 +103,7 @@ namespace Persistence
 
                 var specification2 = new Specification()
                 {
-                    Id = new Guid("3f58fdd1-77bc-47fc-9de8-1348b313a7c8"),
+                    Id = Guid.NewGuid(),
                     Name = "Specification 02",
                     Code = "02Spec",
                     CreatedAtUtc = new DateTime(2021, 08, 15),
@@ -113,7 +113,7 @@ namespace Persistence
 
                 var sourceMaterial1 = new SourceMaterial()
                 {
-                    Id = new Guid("29d35a08-3e09-4108-bef4-419b007dcb38"),
+                    Id = Guid.NewGuid(),
                     SourceName = "Source 01",
                     MaterialDesciption = "Soil and Rock 1",
                     CreatedAtUtc = new DateTime(2021, 08, 15),
@@ -122,7 +122,7 @@ namespace Persistence
 
                 var sourceMaterial2 = new SourceMaterial()
                 {
-                    Id = new Guid("166cee7f-8419-4655-9bb0-57d177d65939"),
+                    Id = Guid.NewGuid(),
                     SourceName = "Source 01",
                     MaterialDesciption = "Soil and Rock 2",
                     CreatedAtUtc = new DateTime(2021, 08, 15),
@@ -131,7 +131,7 @@ namespace Persistence
 
                 var sample1 = new Sample()
                 {
-                    Id = new Guid("45d8f01c-5bca-4267-8d68-5f8f983fedc6"),
+                    Id = Guid.NewGuid(),
                     Name = "Barossa Soil ",
                     SampledBy = "Jack Phan",
                     SampledDate = new DateTime(2021, 08, 15),
@@ -142,7 +142,7 @@ namespace Persistence
 
                 var sample2 = new Sample()
                 {
-                    Id = new Guid("237d6d1c-dc08-4105-8e97-8d598d5aab44"),
+                    Id = Guid.NewGuid(),
                     Name = "Farm Soil ",
                     SampledBy = "Emily Phan",
                     SampledDate = new DateTime(2021, 08, 15),
@@ -154,7 +154,7 @@ namespace Persistence
 
                 var preparation1 = new Preparation()
                 {
-                    Id = new Guid("2b1e6481-0c73-434e-8756-061e20e16d70"),
+                    Id = Guid.NewGuid(),
                     Method = "B",
                     DryingTemperature = 100,
                     Balance = balanceEquipment1,
@@ -166,7 +166,7 @@ namespace Persistence
 
                 var preparation2 = new Preparation()
                 {
-                    Id = new Guid("9399cf01-c108-46e2-b2d1-4ffdce30aa0a"),
+                    Id = Guid.NewGuid(),
                     Method = "A",
                     DryingTemperature = 90,
                     Balance = balanceEquipment2,
@@ -176,8 +176,8 @@ namespace Persistence
 
                 var standardTestMethod1 = new StandardTestMethod()
                 {
-                    Id = new Guid("6d865d8d-d05a-43b1-a739-0cec7a3a1fc1"),
-                    Name = "Water (Moisture) Content of Soil and Rock by Mass", 
+                    Id = Guid.NewGuid(),
+                    Name = "Water (Moisture) Content of Soil and Rock by Mass",
                     Code = "ASTM D2216 - 2017",
                     Description = "Standard Test Methods for Laboratory Determination of Water (Moisture) Content of Soil and Rock by Mass",
                     CreatedAtUtc = new DateTime(2021, 08, 15),
@@ -186,7 +186,7 @@ namespace Persistence
 
                 var moistureContent1 = new MoistureContent()
                 {
-                    Id = new Guid("6d865d8d-d05a-43b1-a739-0cec7a3a1fc1"),
+                    Id = Guid.NewGuid(),
                     Project = project1,
                     SourceMaterial = sourceMaterial1,
                     Specification = specification1,
@@ -212,7 +212,7 @@ namespace Persistence
 
                 var moistureContent2 = new MoistureContent()
                 {
-                    Id = new Guid("744eb79c-50c9-4387-b020-bf3908ebc8e8"),
+                    Id = Guid.NewGuid(),
                     Project = project2,
                     SourceMaterial = sourceMaterial2,
                     Specification = specification2,
@@ -236,7 +236,7 @@ namespace Persistence
 
                 var moistureContent3 = new MoistureContent()
                 {
-                    Id = new Guid("f2dc87ee-8e79-4ee1-a9a2-388af9b589e2"),
+                    Id = Guid.NewGuid(),
                     Project = project3,
                     SourceMaterial = sourceMaterial2,
                     Specification = specification2,
@@ -260,7 +260,7 @@ namespace Persistence
 
                 var moistureContent4 = new MoistureContent()
                 {
-                    Id = new Guid("b5791249-9fd0-4f6f-b17a-69778e9d656f"),
+                    Id = Guid.NewGuid(),
                     Project = project4,
                     SourceMaterial = sourceMaterial2,
                     Specification = specification2,
@@ -282,7 +282,7 @@ namespace Persistence
                     UpdatedAtUtc = new DateTime(2021, 08, 15)
                 };
 
-                await context.MoistureContents.AddRangeAsync(moistureContent1, moistureContent2,moistureContent3, moistureContent4);
+                await context.MoistureContents.AddRangeAsync(moistureContent1, moistureContent2, moistureContent3, moistureContent4);
                 await context.SaveChangesAsync();
             }
         }

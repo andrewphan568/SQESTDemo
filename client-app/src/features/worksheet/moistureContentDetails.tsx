@@ -17,14 +17,14 @@ import * as exmapleList from './exampleList'
 
 export default observer(function MoistureContentDetails() {
   const { moistureContentStore } = useStore();
-  const { loadMoistureContent, loading, selectedMoistureContent, changeInfo } = moistureContentStore;
+  const { loadMoistureContent, initialLoading, selectedMoistureContent, changeInfo } = moistureContentStore;
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
     if (id) loadMoistureContent(id);
   }, [id, loadMoistureContent]);
 
-  if (loading) return <LoadingComponent content='Loading worksheet...' />
+  if (initialLoading) return <LoadingComponent content='Loading worksheet...' />
 
   return (
     <>
@@ -38,7 +38,9 @@ export default observer(function MoistureContentDetails() {
               sampledDate={selectedMoistureContent?.sample?.sampledDate}
               sourceMaterialDesciption={selectedMoistureContent?.sourceMaterial?.materialDesciption}
               sourceMaterialName={selectedMoistureContent?.sourceMaterial?.sourceName}
-              specificationName={selectedMoistureContent?.specification?.name} />
+              specificationName={selectedMoistureContent?.specification?.name}
+              worksheetId={selectedMoistureContent?.worksheetId}
+              standardTestMethod={selectedMoistureContent?.standardTestMethod} />
 
             <Header size="small">Preparation</Header>
             <Segment className="section">
@@ -125,7 +127,7 @@ export default observer(function MoistureContentDetails() {
               dateChecked={selectedMoistureContent?.dateChecked}
               content={selectedMoistureContent.remarks}
               changeInfo={changeInfo} />
-            <Button primary >Update</Button>
+            <Button primary floated='right' >Update</Button>
           </Form>
         </>
       }
