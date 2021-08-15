@@ -1,11 +1,12 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../agent";
-import { MoistureContent } from "../models/apiTypes";
+import { MoistureContent, Preparation } from "../models/apiTypes";
 
 export default class MoistureContentStore {
     loading = false;
+    refresh = false;
     moistureContents: MoistureContent[] = [];
-    selectedMoistureContent: MoistureContent | undefined = undefined;
+    selectedMoistureContent: MoistureContent = new MoistureContent();
 
     constructor() {
         makeAutoObservable(this)
@@ -33,9 +34,11 @@ export default class MoistureContentStore {
             this.loading = true;
             try {
                 moistureContent = await agent.MoistureContents.details(id);
-                runInAction(() => {
-                    this.selectedMoistureContent = moistureContent;
-                })
+                if (moistureContent) {
+                    runInAction(() => {
+                        this.selectedMoistureContent = moistureContent!;
+                    })
+                }
                 this.setloading(false);
                 return moistureContent;
             } catch (error) {
@@ -51,6 +54,50 @@ export default class MoistureContentStore {
 
     setloading = (state: boolean) => {
         this.loading = state;
+    }
+    setRefresh = () => {
+        this.refresh = !this.refresh;
+    }
+
+    changeInfo = async (newValue: any, key: string, extraKey?: string) => {
+        console.log(newValue);
+        if (key === "checkedBy") {
+            this.selectedMoistureContent.checkerName = newValue;
+        }
+        else if (key === "dateChecked") {
+            this.selectedMoistureContent.dateChecked = newValue;
+        }
+        else if (key === "remarkContent") {
+            this.selectedMoistureContent.remarks = newValue;
+        }
+        else if (key === "selectInsufficientSampleMass") {
+            this.selectedMoistureContent.selectInsufficientSampleMass = !this.selectedMoistureContent.selectInsufficientSampleMass;
+        }
+        else if (key === "selectMaterialExcluded") {
+            this.selectedMoistureContent.selectMaterialExcluded = !this.selectedMoistureContent.selectMaterialExcluded;
+        }
+        else if (key === "selectDryingTemperature") {
+            this.selectedMoistureContent.selectDryingTemperature = !this.selectedMoistureContent.selectDryingTemperature;
+        }
+        else if (key === "tareAndMaterialDryMass") {
+            this.selectedMoistureContent.tareAndMaterialDryMass = newValue;
+        }
+        else if (key === "tareMass") {
+            this.selectedMoistureContent.tareMass = newValue;
+        }
+        else if (key === "tareAndMaterialWetMass") {
+            this.selectedMoistureContent.tareAndMaterialWetMass = newValue;
+        }
+        else if (key === "selectMethod") {
+            if (!this.selectedMoistureContent.preparation) {
+                this.selectedMoistureContent.preparation = new Preparation();
+            }
+            this.selectedMoistureContent.preparation.method = newValue;
+        }
+        else if (key === "tareAndMaterialDryMass") {
+            this.selectedMoistureContent.tareAndMaterialDryMass = newValue;
+        }
+
     }
 }
 

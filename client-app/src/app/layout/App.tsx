@@ -5,6 +5,7 @@ import NavBar from './NavBar';
 import MoistureContentList from '../../features/worksheet/moistureContentList';
 import MoistureContentDetails from '../../features/worksheet/moistureContentDetails';
 import HomePage from '../../features/home/HomePage';
+import Footer from './Footer';
 import NotFoundPage from '../../features/errors/NotFoundPage';
 import { Container } from 'semantic-ui-react';
 
@@ -27,6 +28,7 @@ function App() {
           </>
         )}
       />
+
     </>
   );
 }

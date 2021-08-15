@@ -7,7 +7,7 @@ export default function NotFoundPage() {
         <Segment placeholder>
             <Header icon>
                 <Icon name='search' />
-                Oops - Not Found Page.
+                Oops - Four Oh Four - Not Found.
             </Header>
             <Segment.Inline>
                 <Button as={Link} to='/moistureContentList' primary>

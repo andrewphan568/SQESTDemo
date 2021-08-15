@@ -4,39 +4,20 @@ import { useStore } from '../../app/stores/store';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import LoadingComponent from '../../app/layout/LoadingComponent';
+
 import {
-  Form, Radio, Divider, TextArea, Button,
-  Icon, Header, Grid, Segment
+  Form, Radio, Header, Grid, Segment, Button
 } from "semantic-ui-react";
 
-const balanceEquipments = [
-  { key: '0', text: 'N/A', value: '' },
-  { key: '1', text: '01BAL', value: '01BAL' },
-  { key: '2', text: '02BAL', value: '02BAL' },
-  { key: '3', text: '03BAL', value: '03BAL' },
-];
-
-const ovenEquipments = [
-  { key: '0', text: 'N/A', value: '' },
-  { key: '1', text: '01OVN', value: '01OVN' },
-  { key: '2', text: '02OVN', value: '02OVN' },
-  { key: '3', text: '03OVN', value: '03OVN' },
-];
-
-
-const particalSizes = [
-  { key: '0', text: 'N/A', value: '' },
-  { key: '1', text: '2" (51mm)', value: '2" (51mm)' },
-  { key: '2', text: '3" (75mm)', value: '3" (75mm)' },
-];
+import TestSubjectSegment from './components/TestSubjectSegment';
+import TestedBySegment from './components/TestedBySegment';
+import RemarksSegment from './components/RemarksSegment';
+import ResultsSegment from './components/ResultsSegment';
+import * as exmapleList from './exampleList'
 
 export default observer(function MoistureContentDetails() {
-  var handleChange = () => {
-    return 1;
-  }
-  const [method, setMethod] = useState("");
   const { moistureContentStore } = useStore();
-  const { loadMoistureContent, loading } = moistureContentStore;
+  const { loadMoistureContent, loading, selectedMoistureContent, changeInfo } = moistureContentStore;
   const { id } = useParams<{ id: string }>();
 
   useEffect(() => {
@@ -44,156 +25,110 @@ export default observer(function MoistureContentDetails() {
   }, [id, loadMoistureContent]);
 
   if (loading) return <LoadingComponent content='Loading worksheet...' />
+
   return (
     <>
-      <Form className="worksheet">
-        <Segment className="section">
+      {selectedMoistureContent &&
+        <>
+          <Form className="worksheet">
 
-          <Grid className="section" columns={3}  >
-            <Grid.Column>
-              <Header as='h4' floated='left'> EST-WOOOO1-S1  </Header>
-            </Grid.Column>
-            <Grid.Column>
-              <Header as='h4'> ASTM D2216 - 2017 </Header>
-            </Grid.Column>
-            <Grid.Column>
-              <Button icon labelPosition='right' floated='right'>Changes Saved
-                <Icon name='undo' />
-              </Button>
-            </Grid.Column>
-          </Grid>
-          <Divider />
+            <TestSubjectSegment projectCode={selectedMoistureContent?.project?.code}
+              projectName={selectedMoistureContent?.project?.name}
+              sampledBy={selectedMoistureContent?.sample?.sampledBy}
+              sampledDate={selectedMoistureContent?.sample?.sampledDate}
+              sourceMaterialDesciption={selectedMoistureContent?.sourceMaterial?.materialDesciption}
+              sourceMaterialName={selectedMoistureContent?.sourceMaterial?.sourceName}
+              specificationName={selectedMoistureContent?.specification?.name} />
 
-          <h4> Water (Moisture) Content of Soil and Rock by Mass</h4>
-          <Grid className="section" columns={2}  >
-            <Grid.Column>
-              <Form.Field>
-                <label>Project</label>
-                <label>Project Code - Project name</label>
-              </Form.Field>
-              <Form.Field>
-                <label>Sampled</label>
-                <label>P22-Feb-2019 by Field Tech 1</label>
-              </Form.Field>
-            </Grid.Column>
-            <Grid.Column>
-              <Form.Field>
-                <label>Source and Material</label>
-                <label>Source name here - Material desciption here</label>
-              </Form.Field>
-              <Form.Field>
-                <label>Specification</label>
-                <label>Specification name here</label>
-              </Form.Field>
-            </Grid.Column>
-          </Grid>
-        </Segment>
+            <Header size="small">Preparation</Header>
+            <Segment className="section">
+              <Grid columns={2}  >
+                <Grid.Column>
+                  <Form.Field><label>Method:</label></Form.Field>
+                  <Form.Field>
+                    <Radio
+                      label="A"
+                      name="SelectMethod"
+                      value="A"
+                      checked={selectedMoistureContent?.preparation?.method === "A"}
+                      onChange={(e) => changeInfo("A", "selectMethod")}
+                    />
+                  </Form.Field>
+                  <Form.Field>
+                    <Radio
+                      label="B"
+                      name="radioGroup"
+                      value="B"
+                      checked={selectedMoistureContent?.preparation?.method === "B"}
+                      onChange={(e) => changeInfo("B", "selectMethod")}
+                    />
+                  </Form.Field>
+                  <Form.Input fluid label='Drying temperature (oC)' defaultValue={selectedMoistureContent?.preparation?.dryingTemperature} />
+                  <Button primary>Change</Button>
+                  <Form.Select fluid label='Balance:' options={exmapleList.balanceEquipments} />
+                </Grid.Column>
+                <Grid.Column>
+                  <Form.Select fluid label='Visual Nominal Particle Size:' options={exmapleList.particalSizes} />
+                  <Form.Checkbox label='Material Excluded' checked={selectedMoistureContent?.preparation?.materialExcluded ? true : false} />
+                  <Form.Input fluid disabled={selectedMoistureContent?.preparation?.materialExcluded ? false : true} />
+                  <Form.Select fluid label='Oven:' options={exmapleList.ovenEquipments} />
+                </Grid.Column>
+              </Grid>
+            </Segment>
 
-        <Header size="small">Preparation</Header>
-        <Segment className="section">
-          <Grid columns={2}  >
-            <Grid.Column>
-              <Form.Field>Method:</Form.Field>
-              <Form.Field>
-                <Radio
-                  label="S"
-                  name="SelectMethod"
-                  value="A"
-                  checked={method === "A"}
-                  onChange={() => handleChange()}
-                />
-              </Form.Field>
-              <Form.Field>
-                <Radio
-                  label="B"
-                  name="radioGroup"
-                  value="B"
-                  checked={method === "B"}
-                  onChange={() => handleChange()}
-                />
-              </Form.Field>
+            <Header size="small">Measurements</Header>
+            <Segment className="section">
+              <Grid columns={2}  >
+                <Grid.Column>
+                  <Form.Input fluid label='Tare ID:' defaultValue={selectedMoistureContent?.tareId} />
+                  <Form.Input fluid label='Tare and Material Wet Mass(g):'
+                    defaultValue={selectedMoistureContent?.tareAndMaterialWetMass}
+                    onChange={(e) => changeInfo(e.target.value, "tareAndMaterialWetMass")} />
+                </Grid.Column>
+                <Grid.Column>
+                  <Form.Input fluid label='Tare Mass (g):' defaultValue={selectedMoistureContent?.tareMass}
+                    onChange={(e) => changeInfo(e.target.value, "tareMass")} />
+                  <Form.Field>
+                    <label>Material wet Mass(g)</label>
+                    <p>{selectedMoistureContent?.tareAndMaterialWetMass}</p>
+                  </Form.Field>
+                </Grid.Column>
+              </Grid>
+            </Segment>
 
-              <Form.Input fluid label='Drying temperature (oC)' />
-              <Form.Select fluid label='Balance:' options={balanceEquipments} />
+            <TestedBySegment testerName={selectedMoistureContent?.testerName} dateTested={selectedMoistureContent.dateTested} />
 
-            </Grid.Column>
-            <Grid.Column>
-              <Form.Select fluid label='Visual Nominal Particle Size:' options={particalSizes} />
-              <Form.Checkbox label='Material Excluded' />
-              <Form.Input fluid disabled={true} />
-              <Form.Select fluid label='Oven:' options={ovenEquipments} />
-            </Grid.Column>
-          </Grid>
-        </Segment>
+            <Header size="small">Dry Mass</Header>
+            <Segment className="section">
+              <Grid columns={2}  >
+                <Grid.Column>
+                  <Form.Select fluid label={'Balance:'} options={exmapleList.balanceEquipments} />
+                  <Form.Input fluid label={'Tare and Material Dry Mass(g):'} defaultValue={selectedMoistureContent?.tareAndMaterialDryMass}
+                    onChange={(e) => changeInfo(e.target.value, "tareAndMaterialDryMass")} />
+                </Grid.Column>
+                <Grid.Column>
+                  <Form.Field>
+                    <label>Material Dry Mass(g)</label>
+                    <p>{selectedMoistureContent?.materialDryMass}</p>
+                  </Form.Field>
+                </Grid.Column>
+              </Grid>
+            </Segment>
 
-        <Header size="small">Measurements</Header>
-        <Segment className="section">
-          <Grid columns={2}  >
-            <Grid.Column>
-              <Form.Input fluid label='Tare ID:' />
-              <Form.Input fluid label='Tare and Material Wet Mass(g):' />
-            </Grid.Column>
-            <Grid.Column>
-              <Form.Input fluid label='Tare Mass (g):' />
-              <Form.Input fluid label='Material Wet Mass(g):' />
-            </Grid.Column>
-          </Grid>
-        </Segment>
+            <ResultsSegment waterContentPercentage={selectedMoistureContent?.waterContentPercentage}
+              insufficientSampleMass={selectedMoistureContent?.selectInsufficientSampleMass}
+              dryingTemperature={selectedMoistureContent?.selectDryingTemperature}
+              materialExcluded={selectedMoistureContent?.selectMaterialExcluded}
+              changeInfo={changeInfo} />
 
-        <Header size="small">Dry Mass</Header>
-        <Segment className="section">
-          <Grid columns={2}  >
-            <Grid.Column>
-              <Form.Select fluid label='Balance:' options={balanceEquipments} />
-              <Form.Input fluid label='Tare and Material Dry Mass(g):' />
-            </Grid.Column>
-            <Grid.Column>
-              <Form.Field>
-                <label>Material Dry Mass(g)</label>
-                <label>2225.7</label>
-              </Form.Field>
-            </Grid.Column>
-          </Grid>
-        </Segment>
-
-        <Header size="small">Results</Header>
-        <Segment className="section">
-          <Grid className="section" columns={2}  >
-            <Grid.Column>
-              <Form.Field>
-                <label>Water Content (%)</label>
-                <label>15.0%</label>
-              </Form.Field>
-              <Header size="small">Report</Header>
-              <Form.Checkbox label='Insufficient Sample Mass' />
-              <Form.Checkbox label='Drying Temperature' />
-              <Form.Checkbox label='Material Excluded' />
-            </Grid.Column>
-          </Grid>
-        </Segment>
-
-        <Header size="small">Remarks</Header>
-        <Segment className="section">
-          <TextArea style={{ minHeight: 100 }} />
-          <Header size="small">Review</Header>
-          <Grid className="section" columns={2}  >
-            <Grid.Column>
-              <Form.Field>
-                <label>Checked By</label>
-                <label>Andrew Phan</label>
-              </Form.Field>
-            </Grid.Column>
-            <Grid.Column>
-              <Form.Field>
-                <label>Date Checked</label>
-                <label>04-Sep-2018</label>
-              </Form.Field>
-            </Grid.Column>
-          </Grid>
-        </Segment>
-
-        <Form.Button content='Clear' />
-      </Form>
+            <RemarksSegment checkedBy={selectedMoistureContent?.checkerName}
+              dateChecked={selectedMoistureContent?.dateChecked}
+              content={selectedMoistureContent.remarks}
+              changeInfo={changeInfo} />
+            <Button primary >Update</Button>
+          </Form>
+        </>
+      }
     </>
   );
 })

@@ -43,6 +43,12 @@ export interface Preparation {
     materialExcluded: string;
 }
 
+export class Preparation implements Preparation {
+    constructor(init?: Preparation) {
+        Object.assign(this, init);
+    }
+}
+
 export interface MoistureContent {
     id: string;
     project: Project;
@@ -64,6 +70,12 @@ export interface MoistureContent {
     remarks: string;
     checkerName: string;
     dateChecked: Date;
+}
+
+export class MoistureContent implements MoistureContent {
+    constructor(init?: MoistureContent) {
+        Object.assign(this, init);
+    }
 }
 
 export interface Result {
