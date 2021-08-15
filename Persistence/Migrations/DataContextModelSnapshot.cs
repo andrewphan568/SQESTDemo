@@ -43,17 +43,6 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BalanceEquipments");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("a50bf529-1712-44a8-b12d-d86e336fcf0c"),
-                            Code = "01BAL",
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ManufactureDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Balance",
-                            UpdatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("Domain.Moisture.MoistureContent", b =>
@@ -104,6 +93,9 @@ namespace Persistence.Migrations
                     b.Property<Guid?>("SpecificationId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("StandardTestMethodId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<double>("TareAndMaterialDryMass")
                         .HasColumnType("float");
 
@@ -125,35 +117,24 @@ namespace Persistence.Migrations
                     b.Property<double>("WaterContentPercentage")
                         .HasColumnType("float");
 
+                    b.Property<string>("WorksheetId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
-                    b.ToTable("MoistureContents");
+                    b.HasIndex("PreparationId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("6d865d8d-d05a-43b1-a739-0cec7a3a1fc1"),
-                            CheckerName = "Andrew Phan",
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateChecked = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DateTested = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MaterialDryMass = 2225.6999999999998,
-                            PreparationId = new Guid("2b1e6481-0c73-434e-8756-061e20e16d70"),
-                            ProjectId = new Guid("8606b885-bde6-4572-8c75-9e714858cf67"),
-                            SampleId = new Guid("45d8f01c-5bca-4267-8d68-5f8f983fedc6"),
-                            SelectDryingTemperature = false,
-                            SelectInsufficientSampleMass = false,
-                            SelectMaterialExcluded = false,
-                            SourceMaterialId = new Guid("29d35a08-3e09-4108-bef4-419b007dcb38"),
-                            SpecificationId = new Guid("03e9993b-b782-4e84-81a9-f9489cb4a689"),
-                            TareAndMaterialDryMass = 2525.6999999999998,
-                            TareAndMaterialWetMass = 2859.5999999999999,
-                            TareId = "MT001",
-                            TareMass = 300.0,
-                            TesterName = "Andrew Phan",
-                            UpdatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            WaterContentPercentage = 15.0
-                        });
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("SampleId");
+
+                    b.HasIndex("SourceMaterialId");
+
+                    b.HasIndex("SpecificationId");
+
+                    b.HasIndex("StandardTestMethodId");
+
+                    b.ToTable("MoistureContents");
                 });
 
             modelBuilder.Entity("Domain.Moisture.SourceMaterial", b =>
@@ -177,16 +158,6 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SourceMaterials");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("29d35a08-3e09-4108-bef4-419b007dcb38"),
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            MaterialDesciption = "Soil and Rock",
-                            SourceName = "Source01",
-                            UpdatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("Domain.Moisture.Specification", b =>
@@ -210,16 +181,6 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Specifications");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("03e9993b-b782-4e84-81a9-f9489cb4a689"),
-                            Code = "01Spec",
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Specification01",
-                            UpdatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("Domain.OvenEquipment", b =>
@@ -246,17 +207,6 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OvenEquipments");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("226b5d9f-3e75-4b6a-9d46-62725d947f90"),
-                            Code = "01Ove",
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ManufactureDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Oven",
-                            UpdatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("Domain.Preparation", b =>
@@ -265,7 +215,7 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("BalanceId")
+                    b.Property<Guid?>("BalanceId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAtUtc")
@@ -288,19 +238,9 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Preparations");
+                    b.HasIndex("BalanceId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("2b1e6481-0c73-434e-8756-061e20e16d70"),
-                            BalanceId = new Guid("a50bf529-1712-44a8-b12d-d86e336fcf0c"),
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            DryingTemperature = 100.0,
-                            Method = "B",
-                            UpdatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            VisualNomialPraticalSize = 0.0
-                        });
+                    b.ToTable("Preparations");
                 });
 
             modelBuilder.Entity("Domain.Project", b =>
@@ -324,16 +264,6 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Projects");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("8606b885-bde6-4572-8c75-9e714858cf67"),
-                            Code = "AAA123",
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Adelaide Agriculture",
-                            UpdatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
                 });
 
             modelBuilder.Entity("Domain.Sample", b =>
@@ -348,7 +278,7 @@ namespace Persistence.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("ProjectId")
+                    b.Property<Guid?>("ProjectId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("SampledBy")
@@ -362,19 +292,92 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Samples");
+                    b.HasIndex("ProjectId");
 
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("45d8f01c-5bca-4267-8d68-5f8f983fedc6"),
-                            CreatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Barossa Soil ",
-                            ProjectId = new Guid("8606b885-bde6-4572-8c75-9e714858cf67"),
-                            SampledBy = "Andrew Phan",
-                            SampledDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            UpdatedAtUtc = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
-                        });
+                    b.ToTable("Samples");
+                });
+
+            modelBuilder.Entity("Domain.StandardTestMethod", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedAtUtc")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StandardTestMethods");
+                });
+
+            modelBuilder.Entity("Domain.Moisture.MoistureContent", b =>
+                {
+                    b.HasOne("Domain.Preparation", "Preparation")
+                        .WithMany()
+                        .HasForeignKey("PreparationId");
+
+                    b.HasOne("Domain.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId");
+
+                    b.HasOne("Domain.Sample", "Sample")
+                        .WithMany()
+                        .HasForeignKey("SampleId");
+
+                    b.HasOne("Domain.Moisture.SourceMaterial", "SourceMaterial")
+                        .WithMany()
+                        .HasForeignKey("SourceMaterialId");
+
+                    b.HasOne("Domain.Moisture.Specification", "Specification")
+                        .WithMany()
+                        .HasForeignKey("SpecificationId");
+
+                    b.HasOne("Domain.StandardTestMethod", "StandardTestMethod")
+                        .WithMany()
+                        .HasForeignKey("StandardTestMethodId");
+
+                    b.Navigation("Preparation");
+
+                    b.Navigation("Project");
+
+                    b.Navigation("Sample");
+
+                    b.Navigation("SourceMaterial");
+
+                    b.Navigation("Specification");
+
+                    b.Navigation("StandardTestMethod");
+                });
+
+            modelBuilder.Entity("Domain.Preparation", b =>
+                {
+                    b.HasOne("Domain.BalanceEquipment", "Balance")
+                        .WithMany()
+                        .HasForeignKey("BalanceId");
+
+                    b.Navigation("Balance");
+                });
+
+            modelBuilder.Entity("Domain.Sample", b =>
+                {
+                    b.HasOne("Domain.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId");
+
+                    b.Navigation("Project");
                 });
 #pragma warning restore 612, 618
         }

@@ -6,18 +6,13 @@ namespace Domain.Moisture
     public class MoistureContent : EntityBase
     {
         public Guid Id { get; set; }
-
-/*      public Project Project { get; set; }
+        public string WorksheetId { get; set; }
+        public Project Project { get; set; }
         public SourceMaterial SourceMaterial { get; set; }
         public Specification Specification { get; set; }
         public Sample Sample { get; set; }
-        public Preparation Preparation { get; set; }*/
-
-        public Guid? ProjectId { get; set; }
-        public Guid? SourceMaterialId { get; set; }
-        public Guid? SpecificationId { get; set; }
-        public Guid? SampleId { get; set; }
-        public Guid? PreparationId { get; set; }
+        public Preparation Preparation { get; set; }
+        public StandardTestMethod StandardTestMethod { get; set; }
         public string TareId { get; set; }
         public double TareMass { get; set; }
         public double TareAndMaterialWetMass { get; set; }

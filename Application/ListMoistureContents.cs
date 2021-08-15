@@ -34,14 +34,16 @@ namespace Application.MoistureContents
             if (moistureContents is null) return Result<List<MoistureContentDto>>.Failure("Id Not Found");
             var moistureContentDtoList = new List<MoistureContentDto>();
 
-            foreach (var moistureContent in moistureContents) {
+            foreach (var moistureContent in moistureContents)
+            {
                 var moistureContentDto = new MoistureContentDto();
                 _mapper.Map(moistureContent, moistureContentDto);
+            }
 
                 // temporarily use this way to get child objects in moistureContent
                 // will refactor after sovling the "seed owned types" issue when migrating database
 
-                if (moistureContent.ProjectId is not null)
+           /*     if (moistureContent.ProjectId is not null)
                 {
                     var project = await _dataContext.Projects.FindAsync(moistureContent.ProjectId);
                     if (project is not null) moistureContentDto.Project = project;
@@ -72,7 +74,7 @@ namespace Application.MoistureContents
                 }
 
                 moistureContentDtoList.Add(moistureContentDto);
-            }
+            }*/
 
             return Result<List<MoistureContentDto>>.Success(moistureContentDtoList);
         }

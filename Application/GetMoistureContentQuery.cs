@@ -50,7 +50,7 @@ namespace Application
             // temporarily use this way to get child objects in moistureContent
             // will refactor after sovling the "seed owned types" issue when migrating database
 
-            if (moistureContent.ProjectId is not null) {
+         /*   if (moistureContent.ProjectId is not null) {
                 var project = await _dataContext.Projects.FindAsync(moistureContent.ProjectId);
                 if (project is not null) moistureContentDto.Project = project;
             }
@@ -78,7 +78,7 @@ namespace Application
                 var preparation = await _dataContext.Preparations.FindAsync(moistureContent.PreparationId);
                 if (preparation is not null) moistureContentDto.Preparation = preparation;
             }
-
+*/
             return Result<MoistureContentDto>.Success(moistureContentDto);
 
         }
