@@ -23,11 +23,18 @@ namespace Application.MoistureContents
         {
             _dataContext = dataContext;
             _mapper = mapper;
-        }       
+        }
 
         public async Task<Result<List<MoistureContentDto>>> Handle(ListMoistureContentsQuery request, CancellationToken cancellationToken)
         {
-           var moistureContents = await _dataContext.MoistureContents.ToListAsync();
+            var moistureContents = await _dataContext.MoistureContents
+                                        .Include(m => m.Project)
+                                        .Include(m => m.SourceMaterial)
+                                        .Include(m => m.Specification)
+                                        .Include(m => m.Sample)
+                                        .Include(m => m.Preparation)
+                                        .Include(m => m.StandardTestMethod)
+                                        .ToListAsync();
 
             if (moistureContents is null) return Result<List<MoistureContentDto>>.Failure("Id Not Found");
             var moistureContentDtoList = new List<MoistureContentDto>();
@@ -36,7 +43,7 @@ namespace Application.MoistureContents
             {
                 var moistureContentDto = new MoistureContentDto();
                 _mapper.Map(moistureContent, moistureContentDto);
-            }             
+            }
 
             return Result<List<MoistureContentDto>>.Success(moistureContentDtoList);
         }

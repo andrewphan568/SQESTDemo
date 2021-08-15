@@ -2,6 +2,7 @@
 using AutoMapper;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 using System;
 using System.Threading;
@@ -33,12 +34,19 @@ namespace Application
         {
             _dataContext = dataContext;
             _mapper = mapper;
-        }      
+        }
 
         public async Task<Result<MoistureContentDto>> Handle(GetMoistureContentQuery request, CancellationToken cancellationToken)
         {
-             var moistureContent = await _dataContext.MoistureContents.FindAsync(request.Id);
-            if (moistureContent is null)  return Result<MoistureContentDto>.Failure("Id Not Found");
+            var moistureContent = await _dataContext.MoistureContents.Include(m => m.Project)
+                                       .Include(m => m.SourceMaterial)
+                                       .Include(m => m.Specification)
+                                       .Include(m => m.Preparation)
+                                       .Include(m => m.Sample)
+                                       .Include(m => m.StandardTestMethod)
+                                       .SingleOrDefaultAsync(m => m.Id == request.Id);
+
+            if (moistureContent is null) return Result<MoistureContentDto>.Failure("Id Not Found");
 
             var moistureContentDto = new MoistureContentDto();
             _mapper.Map(moistureContent, moistureContentDto);
