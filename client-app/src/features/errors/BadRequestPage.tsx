@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Header, Icon, Segment } from 'semantic-ui-react';
 
-export default function NotFoundPage() {
+export default function BadRequestPage() {
     return (
         <Segment placeholder>
             <Header icon>
                 <Icon name='search' />
-                Oops - Four Oh Four - Not Found.
+                Oops - Four Oh Oh - Bad Request.
             </Header>
 
             <Segment.Inline>

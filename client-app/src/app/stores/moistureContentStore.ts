@@ -1,5 +1,6 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import agent from "../agent";
+import { history } from '../../';
 import { MoistureContent, Preparation } from "../models/apiTypes";
 
 export default class MoistureContentStore {

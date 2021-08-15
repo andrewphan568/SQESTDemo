@@ -1,4 +1,5 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import { history } from '../';
 import { MoistureContent } from '../app/models/apiTypes';
 
 // replicate the real waiting time
@@ -9,14 +10,27 @@ const sleep = (delay: number) => {
 }
 
 axios.interceptors.response.use(async response => {
-    try {
-        await sleep(1000);
-        return response;
-    } catch (error) {
-        console.log(error);
-        return await Promise.reject(error);
+    await sleep(500);
+    return response;
+}, (error: AxiosError) => {
+    const { status } = error.response!;
+    switch (status) {
+        case 400:
+            history.push('/badRequest');
+            break;
+        case 401:
+            history.push('/unauthorised');
+            break;
+        case 404:
+            history.push('/notFound');
+            break;
+        case 500:
+            history.push('/serverError');
+            break;
     }
+    return Promise.reject(error);
 })
+
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
 

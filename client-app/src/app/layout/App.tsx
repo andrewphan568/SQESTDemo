@@ -7,6 +7,7 @@ import MoistureContentDetails from '../../features/worksheet/moistureContentDeta
 import HomePage from '../../features/home/HomePage';
 import Footer from './Footer';
 import NotFoundPage from '../../features/errors/NotFoundPage';
+import BadRequestPage from '../../features/errors/BadRequestPage';
 import { Container } from 'semantic-ui-react';
 
 function App() {
@@ -22,6 +23,8 @@ function App() {
               <Switch>
                 <Route exact path='/moistureContentList' component={MoistureContentList} />
                 <Route path='/moistureContentList/:id' component={MoistureContentDetails} />
+                <Route path='/notFound' component={NotFoundPage} />
+                <Route path='/badRequest' component={BadRequestPage} />
                 <Route component={NotFoundPage} />
               </Switch>
             </Container>
