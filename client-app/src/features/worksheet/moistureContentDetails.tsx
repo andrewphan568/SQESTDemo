@@ -13,7 +13,7 @@ import {
   Grid,
   Segment
 } from "semantic-ui-react";
-import { MoistureContentDto } from '../../app/models/apiTypes';
+import { MoistureContent } from '../../app/models/apiTypes';
 const balanceEquipments = [
   { key: '0', text: 'N/A', value: '' },
   { key: '1', text: '01BAL', value: '01BAL' },
@@ -35,15 +35,6 @@ const particalSizes = [
   { key: '2', text: '3" (75mm)', value: '3" (75mm)' },
 ];
 function MoistureContentDetails() {
-  // const [moistureContents, setMoistureContents] = useState([]);
-
-  // useEffect(() => {
-  //   axios.get('http://localhost:5000/api/moistureContent').then(response => {
-  //   console.log(response);
-  //   setMoistureContents(response.data.value);
-  //   })
-  // },[])
-
   var handleChange = () => {
     return 1;
   }

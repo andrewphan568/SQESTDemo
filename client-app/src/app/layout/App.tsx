@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './styles.css';
+import { Route, Switch, useLocation } from 'react-router-dom';
 import NavBar from './NavBar';
-import MoistureContentDetails from '../../features/worksheet/moistureContentDetails';
 import MoistureContentList from '../../features/worksheet/moistureContentList'
+import MoistureContentDetails from '../../features/worksheet/moistureContentList'
+import HomePage from '../../features/home/HomePage';
+import NotFoundPage from '../../features/errors/NotFoundPage';
 import { Container } from 'semantic-ui-react';
 function App() {
 
@@ -11,18 +14,29 @@ function App() {
 
   useEffect(() => {
     axios.get('http://localhost:5000/api/moistureContent').then(response => {
-      console.log(response);
       setMoistureContents(response.data.value);
     })
   }, [])
 
+  const location = useLocation();
   return (
     <>
-      <NavBar />
-      <Container style={{ marginTop: '7em' }}>
-        <MoistureContentList moistureContents={moistureContents} />
-      </Container>
-
+      <Route exact path='/' component={HomePage} />
+      <Route
+        path={'/(.+)'}
+        render={() => (
+          <>
+            <NavBar />
+            <Container style={{ marginTop: '7em' }}>
+              <Switch>
+                <Route exact path='/moistureContentList' component={MoistureContentList} />
+                <Route path='/moistureContentLisy/:id' component={MoistureContentDetails} />
+                <Route component={NotFoundPage} />
+              </Switch>
+            </Container>
+          </>
+        )}
+      />
     </>
   );
 }

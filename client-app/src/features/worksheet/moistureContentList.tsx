@@ -13,7 +13,7 @@ export default function MoistureContentList({ moistureContents }: Props) {
                 {moistureContents.map(moistureContent => (
                     <Item key={moistureContent.id}>
                         <Item.Content>
-                            <Item.Header as='a'>{'Project ' + moistureContent.project?.name}</Item.Header>
+                            <Item.Header as='a'>{'Project: ' + moistureContent.project?.name}</Item.Header>
                             <Item.Description>
                                 <div>{'Water Content (%): ' + moistureContent.waterContentPercentage + ' (%)'}</div>
                                 <div>{'Tested By: ' + moistureContent.testerName}</div>
