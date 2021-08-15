@@ -11,30 +11,20 @@ using System.Threading.Tasks;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class MoistureContentController : ControllerBase
+    public class MoistureContentController : BaseApiController
     {
-        private readonly IMediator _mediator;
-
-        public MoistureContentController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
 
         [HttpGet]
-        public async Task<Result<List<MoistureContentDto>>> GetMoistureContents()
+        public async Task<IActionResult> GetMoistureContents()
         {
-            
-            return await _mediator.Send(new ListMoistureContentsQuery());
+
+            return HandleResult(await Mediator.Send(new ListMoistureContentsQuery()));
         }
 
         [HttpGet("{id}")]
-        public async Task<Result<MoistureContentDto>> GetMoistureContent(Guid id)
+        public async Task<IActionResult> GetMoistureContent(Guid id)
         {
-            return await _mediator.Send(new GetMoistureContentQuery(id));
+            return HandleResult(await Mediator.Send(new GetMoistureContentQuery(id)));
         }
-
-
     }
 }

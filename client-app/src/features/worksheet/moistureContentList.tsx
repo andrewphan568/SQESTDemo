@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Button, Item, Segment } from 'semantic-ui-react';
-import { MoistureContent } from '../../app/models/apiTypes';
+import { useStore } from '../../app/stores/store';
+import { observer } from 'mobx-react-lite';
+import LoadingComponent from '../../app/layout/LoadingComponent';
 
-interface Props {
-    moistureContents: MoistureContent[];
-}
+export default observer(function MoistureContentList() {
+    const { moistureContentStore } = useStore();
+    const { loadMoistureContents, moistureContents } = moistureContentStore;
 
-export default function MoistureContentList({ moistureContents }: Props) {
+    useEffect(() => {
+        if (moistureContents.length === 0) loadMoistureContents();
+    }, [moistureContents.length, loadMoistureContents])
+
+    if (moistureContentStore.loading) return <LoadingComponent content='Loading worksheets...' />
+
     return (
         <Segment style={{ width: '60%' }}>
             <Item.Group divided>
@@ -20,7 +28,7 @@ export default function MoistureContentList({ moistureContents }: Props) {
                                 <div>{'Date Tested: ' + moistureContent.dateTested}</div>
                             </Item.Description>
                             <Item.Extra>
-                                <Button floated='right' content='View' color='blue' />
+                                <Button as={Link} to={`/moistureContentList/${moistureContent.id}`} floated='right' content='View' color='blue' />
                                 <Button floated='right' content='Delete' color='red' />
                             </Item.Extra>
                         </Item.Content>
@@ -29,4 +37,4 @@ export default function MoistureContentList({ moistureContents }: Props) {
             </Item.Group>
         </Segment>
     )
-}
+})

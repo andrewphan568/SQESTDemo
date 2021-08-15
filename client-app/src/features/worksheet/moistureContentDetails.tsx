@@ -1,19 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './worksheetStyles.css';
-import axios from 'axios';
+import { useStore } from '../../app/stores/store';
+import { useParams } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
+import LoadingComponent from '../../app/layout/LoadingComponent';
 import {
-  Form,
-  Radio, Divider,
-  Input,
-  TextArea,
-  Button,
-  Icon,
-  Select,
-  Header,
-  Grid,
-  Segment
+  Form, Radio, Divider, TextArea, Button,
+  Icon, Header, Grid, Segment
 } from "semantic-ui-react";
-import { MoistureContent } from '../../app/models/apiTypes';
+
 const balanceEquipments = [
   { key: '0', text: 'N/A', value: '' },
   { key: '1', text: '01BAL', value: '01BAL' },
@@ -34,12 +29,21 @@ const particalSizes = [
   { key: '1', text: '2" (51mm)', value: '2" (51mm)' },
   { key: '2', text: '3" (75mm)', value: '3" (75mm)' },
 ];
-function MoistureContentDetails() {
+
+export default observer(function MoistureContentDetails() {
   var handleChange = () => {
     return 1;
   }
   const [method, setMethod] = useState("");
+  const { moistureContentStore } = useStore();
+  const { loadMoistureContent, loading } = moistureContentStore;
+  const { id } = useParams<{ id: string }>();
 
+  useEffect(() => {
+    if (id) loadMoistureContent(id);
+  }, [id, loadMoistureContent]);
+
+  if (loading) return <LoadingComponent content='Loading worksheet...' />
   return (
     <>
       <Form className="worksheet">
@@ -192,6 +196,6 @@ function MoistureContentDetails() {
       </Form>
     </>
   );
-}
+})
 
-export default MoistureContentDetails;
+
