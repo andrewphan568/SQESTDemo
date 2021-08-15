@@ -1,22 +1,19 @@
 ﻿using Domain;
 using Domain.Moisture;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace API.DTOs
 {
     public class MoistureContentDto
     {
         public Guid Id { get; set; }
-
+        public string WorksheetId { get; set; }
         public Project Project { get; set; }
         public SourceMaterial SourceMaterial { get; set; }
         public Specification Specification { get; set; }
         public Sample Sample { get; set; }
         public Preparation Preparation { get; set; }
-
+        public StandardTestMethod StandardTestMethod { get; set; }
         public string TareId { get; set; }
         public double TareMass { get; set; }
         public double TareAndMaterialWetMass { get; set; }
