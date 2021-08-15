@@ -23,9 +23,7 @@ namespace Application.MoistureContents
         {
             _dataContext = dataContext;
             _mapper = mapper;
-        }
-
-        public IMapper Mapper { get; }
+        }       
 
         public async Task<Result<List<MoistureContentDto>>> Handle(ListMoistureContentsQuery request, CancellationToken cancellationToken)
         {

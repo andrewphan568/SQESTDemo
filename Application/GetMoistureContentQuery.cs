@@ -33,9 +33,7 @@ namespace Application
         {
             _dataContext = dataContext;
             _mapper = mapper;
-        }
-
-        public IMapper Mapper { get; }
+        }      
 
         public async Task<Result<MoistureContentDto>> Handle(GetMoistureContentQuery request, CancellationToken cancellationToken)
         {

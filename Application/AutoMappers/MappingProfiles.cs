@@ -9,6 +9,7 @@ namespace Application.AutoMappers
         public MappingProfiles()
         {
             CreateMap<MoistureContent, MoistureContentDto>();
+            CreateMap<MoistureContent, MoistureContent>();
         }
 
         
