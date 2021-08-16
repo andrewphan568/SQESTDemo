@@ -1,5 +1,5 @@
 # SQESTDemo
-The simple app is motivated based on S-QEST’s Take-Home Coding Challenge. It implements the simple CRUD workflow from backend to frontend and has a few Unit Tests.
+The simple app is motivated by S-QEST’s Take-Home Coding Challenge. It implements the simple CRUD workflow from backend to frontend and has a few Unit Tests.
 
 There are still some works that need to work on the front end ( testing, clean up code,fix bugs,...), but it is good for a demo purpose.
 
