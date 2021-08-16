@@ -2,6 +2,12 @@
 The simple app is motivated based on S-QEST’s Take-Home Coding Challenge. It implements the simple CRUD workflow from backend to frontend and has a few Unit Tests.
 
 There are still some works that need to work on the front end ( testing, clean up code,fix bugs,...), but it is good for a demo purpose.
+
+## Code-Challenge Files
+- Question 1: Moisture Content object model, pls refer to the file MoistureContent.cs (dir SQEST\Domain\Moisture\MoistureContent.cs). Please note that the Moisture Content model is the [tag -finish_code_challege]]https://github.com/andrewphan568/SQESTDemo/releases/tag/finish_code_challenge is so much simple that the updated Moisture Content model in the lasted main branch. The extra field int the lasted model, just simply use to store the data from front-end form.
+- Question 2: Calculates Material Wet Mass, Material Dry Mass and Water Content, pls refer to the file MoistureContentCalculator.cs ( dir SQEST\Application\Helpers\MoistureContentCalculator.cs)
+- Question 3: unit tests, pls refer to the MoistureContentTest ( dir SQEST\SQEST.Tests\MoistureContentTest.cs)
+
 ## Technologies
 The project follows the Clean Architecture (https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
 ### Backend
