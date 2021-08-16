@@ -18,7 +18,7 @@ import * as exampleList from './exampleList'
 
 export default observer(function MoistureContentDetails() {
   const { moistureContentStore } = useStore();
-  const { initialLoading, editMode, createMode, selectedMoistureContent,
+  const { initialLoading, editMode, createMode, selectedMoistureContent, massErrors,
     changeInfo, loadMoistureContent, setEditMode, createMoistureContent, updateMoistureContent,
     clearTestBySegment, clearRemarks } = moistureContentStore;
   const { id } = useParams<{ id: string }>();
@@ -102,15 +102,12 @@ export default observer(function MoistureContentDetails() {
                 <Grid.Column>
                   <Form.Input fluid label='Tare ID:' defaultValue={selectedMoistureContent?.tareId}
                     onChange={(e, v) => updateInfo(v, "tareId", "MeasurementsSegment")} />
-
-                  <InputWithMessage label='Tare and Material Wet Mass(g):' key="tareAndMaterialWetMass" extraKey="MeasurementsSegment"
-                  value={selectedMoistureContent?.tareAndMaterialWetMass} changeInfo={updateInfo} />
-
-                  
+                  <InputWithMessage label='Tare and Material Wet Mass(g):' mainKey="tareAndMaterialWetMass" extraKey="MeasurementsSegment"
+                    value={selectedMoistureContent?.tareAndMaterialWetMass} changeInfo={updateInfo} warningMessageMC={massErrors.get("tareAndMaterialWetMass")} />
                 </Grid.Column>
                 <Grid.Column>
-                  <InputWithMessage label='Tare Mass (g):' key="tareMass" extraKey="MeasurementsSegment" value={selectedMoistureContent?.tareMass}
-                    changeInfo={updateInfo} />
+                  <InputWithMessage label='Tare Mass (g):' mainKey="tareMass" extraKey="MeasurementsSegment" value={selectedMoistureContent?.tareMass}
+                    changeInfo={updateInfo} warningMessageMC={massErrors.get("tareMass")} />
                   <Form.Field>
                     <label>Material wet Mass(g)</label>
                     <p>{selectedMoistureContent?.materialWetMass ?? "N/A"}</p>
@@ -131,9 +128,8 @@ export default observer(function MoistureContentDetails() {
                 <Grid.Column>
                   <Form.Select fluid label={'Balance:'} options={exampleList.balanceEquipments} value={selectedMoistureContent?.preparation?.balance?.code}
                     onChange={(e, v) => updateInfo(v.value, "dryMassBalance", "DryMassSegment")} />
-
-                  <Form.Input fluid label={'Tare and Material Dry Mass(g):'} defaultValue={selectedMoistureContent?.tareAndMaterialDryMass}
-                    onChange={(e) => updateInfo(e.target.value, "tareAndMaterialDryMass")} />
+                  <InputWithMessage label='Tare and Material Dry Mass(g):' mainKey="tareAndMaterialDryMass" extraKey="DryMassSegment"
+                    value={selectedMoistureContent?.tareAndMaterialDryMass} changeInfo={updateInfo} warningMessageMC={massErrors.get("tareAndMaterialDryMass")} />
                 </Grid.Column>
                 <Grid.Column>
                   <Form.Field>

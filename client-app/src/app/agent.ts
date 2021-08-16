@@ -47,7 +47,7 @@ const MoistureContents = {
     list: () => requests.get<MoistureContent[]>('/moistureContent'),
     details: (id: string) => requests.get<MoistureContent>(`/moistureContent/${id}`),
     create: (moistureContent: MoistureContent) => axios.post<void>('/moistureContent', moistureContent),
-    update: (moistureContent: MoistureContent) => axios.put<void>(`/moistureContent/${moistureContent.id}`, moistureContent),
+    update: (moistureContent: MoistureContent) => axios.put<void>('/moistureContent', moistureContent),
     delete: (id: string) => axios.delete<MoistureContent>(`/moistureContent/${id}`)
 }
 

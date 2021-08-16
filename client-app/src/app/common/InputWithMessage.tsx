@@ -1,11 +1,11 @@
 import React from 'react';
-import { Form, Message } from 'semantic-ui-react';
+import { Form, Label } from 'semantic-ui-react';
 import { WarningMessageMC } from '../models/apiTypes';
 import { observer } from 'mobx-react-lite';
 
 interface Props {
     label?: string;
-    key: string;
+    mainKey: string;
     extraKey?: string;
     value: any;
     warningMessageMC?: WarningMessageMC
@@ -14,19 +14,22 @@ interface Props {
 
 // for Moisture Content Details Form
 export default observer(function InputWithMessage(props: Props) {
-    const { key, value, label, warningMessageMC, changeInfo } = props;
+    const { mainKey, value, label, warningMessageMC, extraKey, changeInfo } = props;
     const isError = warningMessageMC?.isError;
-    const isWaring = warningMessageMC?.isWarning;
+    const isWarning = warningMessageMC?.isWarning;
     const message = warningMessageMC?.message;
 
     return (
-        <Form.Field error={isError} warning={isWaring}>
-            <label>{label}</label>
-            <input value={value} />
-            <Message
-                error={isError} warning={isWaring}
-                content={message}
-            />
-        </Form.Field >
+        <>
+            <Form.Field error={isError} warning={isWarning}>
+                <label>{label}</label>
+                <input value={value} onChange={(e) => changeInfo(e.target.value, mainKey, extraKey)} />
+            </Form.Field >
+            {(isError || isWarning) &&
+
+                <Label basic color={isError ? 'red' : 'yellow'}>{message}</Label>
+            }
+        </>
     )
-})
+}
+)

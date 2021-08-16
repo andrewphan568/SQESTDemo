@@ -1,7 +1,8 @@
 import React from 'react';
 import {
-    Form, TextArea, Header, Grid, Segment,
+    Form, Header, Grid, Segment,
 } from "semantic-ui-react";
+import { observer } from 'mobx-react-lite';
 
 interface Props {
     waterContentPercentage?: number,
@@ -11,7 +12,7 @@ interface Props {
     changeInfo: (newValue: any, key: string, extraKey?: string) => void
 }
 
-export default function ResultsSegment({ waterContentPercentage, insufficientSampleMass, dryingTemperature, materialExcluded, changeInfo }: Props) {
+export default observer(function ResultsSegment({ waterContentPercentage, insufficientSampleMass, dryingTemperature, materialExcluded, changeInfo }: Props) {
     return (
         <>
             <Header size="small">Results</Header>
@@ -20,15 +21,18 @@ export default function ResultsSegment({ waterContentPercentage, insufficientSam
                     <Grid.Column>
                         <Form.Field>
                             <label>Water Content (%)</label>
-                            <p>{waterContentPercentage}%</p>
+                            <p>{waterContentPercentage ? waterContentPercentage.toFixed(2) + "%" : "N/A"}</p>
                         </Form.Field>
                         <Header size="small">Report</Header>
-                        <Form.Checkbox label='Insufficient Sample Mass' checked={insufficientSampleMass} onChange={(e, value) => changeInfo(value, "selectInsufficientSampleMass")} />
-                        <Form.Checkbox label='Drying Temperature' checked={dryingTemperature} onChange={(e, value) => changeInfo(value, "selectDryingTemperature")} />
-                        <Form.Checkbox label='Material Excluded' checked={materialExcluded} onChange={(e, value) => changeInfo(value, "selectMaterialExcluded")} />
+                        <Form.Checkbox label='Insufficient Sample Mass' checked={insufficientSampleMass}
+                            onChange={(e, value) => changeInfo(value, "selectInsufficientSampleMass", "ResultsSegment")} />
+                        <Form.Checkbox label='Drying Temperature' checked={dryingTemperature}
+                            onChange={(e, value) => changeInfo(value, "selectDryingTemperature", "ResultsSegment")} />
+                        <Form.Checkbox label='Material Excluded' checked={materialExcluded}
+                            onChange={(e, value) => changeInfo(value, "selectMaterialExcluded", "ResultsSegment")} />
                     </Grid.Column>
                 </Grid>
             </Segment>
         </>
     )
-}
+})
