@@ -8,6 +8,7 @@ import HomePage from '../../features/home/HomePage';
 import Footer from './Footer';
 import NotFoundPage from '../../features/errors/NotFoundPage';
 import BadRequestPage from '../../features/errors/BadRequestPage';
+import ServerErrorPage from '../../features/errors/ServerErrorPage';
 import { Container } from 'semantic-ui-react';
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
                 <Route path='/createMoistureContent' component={MoistureContentDetails} />
                 <Route path='/notFound' component={NotFoundPage} />
                 <Route path='/badRequest' component={BadRequestPage} />
+                <Route path='/serverError' component={ServerErrorPage} />
                 <Route component={NotFoundPage} />
               </Switch>
             </Container>

@@ -10,7 +10,7 @@ const sleep = (delay: number) => {
 }
 
 axios.interceptors.response.use(async response => {
-    await sleep(500);
+    await sleep(600);
     return response;
 }, (error: AxiosError) => {
     const { status } = error.response!;

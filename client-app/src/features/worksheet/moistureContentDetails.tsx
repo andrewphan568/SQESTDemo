@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import './worksheetStyles.css';
 import { useStore } from '../../app/stores/store';
 import { useParams } from 'react-router-dom';
@@ -13,12 +13,22 @@ import TestSubjectSegment from './components/TestSubjectSegment';
 import TestedBySegment from './components/TestedBySegment';
 import RemarksSegment from './components/RemarksSegment';
 import ResultsSegment from './components/ResultsSegment';
-import * as exmapleList from './exampleList'
+import InputWithMessage from '../../app/common/InputWithMessage';
+import * as exampleList from './exampleList'
 
 export default observer(function MoistureContentDetails() {
   const { moistureContentStore } = useStore();
-  const { loadMoistureContent, initialLoading, selectedMoistureContent, changeInfo } = moistureContentStore;
+  const { initialLoading, editMode, createMode, selectedMoistureContent,
+    changeInfo, loadMoistureContent, setEditMode, createMoistureContent, updateMoistureContent,
+    clearTestBySegment, clearRemarks } = moistureContentStore;
   const { id } = useParams<{ id: string }>();
+
+  let updateInfo = (newValue: any, key: string, extraKey?: string) => {
+    //do nothing
+  };
+  if (editMode || createMode) {
+    updateInfo = changeInfo;
+  }
 
   useEffect(() => {
     if (id) loadMoistureContent(id);
@@ -40,7 +50,9 @@ export default observer(function MoistureContentDetails() {
               sourceMaterialName={selectedMoistureContent?.sourceMaterial?.sourceName}
               specificationName={selectedMoistureContent?.specification?.name}
               worksheetId={selectedMoistureContent?.worksheetId}
-              standardTestMethod={selectedMoistureContent?.standardTestMethod} />
+              standardTestMethod={selectedMoistureContent?.standardTestMethod}
+              changeInfo={updateInfo}
+              editModeOrCreateMode={editMode || createMode} />
 
             <Header size="small">Preparation</Header>
             <Segment className="section">
@@ -48,32 +60,38 @@ export default observer(function MoistureContentDetails() {
                 <Grid.Column>
                   <Form.Field><label>Method:</label></Form.Field>
                   <Form.Field>
-                    <Radio
-                      label="A"
-                      name="SelectMethod"
-                      value="A"
+                    <Radio label="A" name="SelectMethod" value="A"
                       checked={selectedMoistureContent?.preparation?.method === "A"}
-                      onChange={(e) => changeInfo("A", "selectMethod")}
+                      onChange={(e) => updateInfo("A", "selectMethod")}
                     />
                   </Form.Field>
                   <Form.Field>
-                    <Radio
-                      label="B"
-                      name="radioGroup"
-                      value="B"
+                    <Radio label="B" name="radioGroup" value="B"
                       checked={selectedMoistureContent?.preparation?.method === "B"}
-                      onChange={(e) => changeInfo("B", "selectMethod")}
+                      onChange={(e) => updateInfo("B", "selectMethod")}
                     />
                   </Form.Field>
-                  <Form.Input fluid label='Drying temperature (oC)' defaultValue={selectedMoistureContent?.preparation?.dryingTemperature} />
-                  <Button primary>Change</Button>
-                  <Form.Select fluid label='Balance:' options={exmapleList.balanceEquipments} />
+                  <Form.Input fluid label='Drying temperature (oC)'
+                    onChange={(e) => updateInfo(e.target.value, "dryingtemperature", "PreparationSegment")}
+                    defaultValue={selectedMoistureContent?.preparation?.dryingTemperature}
+                  />
+                  <Form.Select fluid label='Balance:' options={exampleList.balanceEquipments} value={selectedMoistureContent?.preparation?.balance?.code}
+                    onChange={(e, v) => updateInfo(v.value, "balanceEquipment", "PreparationSegment")}
+                  />
                 </Grid.Column>
                 <Grid.Column>
-                  <Form.Select fluid label='Visual Nominal Particle Size:' options={exmapleList.particalSizes} />
-                  <Form.Checkbox label='Material Excluded' checked={selectedMoistureContent?.preparation?.materialExcluded ? true : false} />
-                  <Form.Input fluid disabled={selectedMoistureContent?.preparation?.materialExcluded ? false : true} />
-                  <Form.Select fluid label='Oven:' options={exmapleList.ovenEquipments} />
+                  <Form.Select fluid label='Visual Nominal Particle Size:' options={exampleList.particalSizes}
+                    onChange={(e, v) => updateInfo(v.value, "visualNominalParticleSize", "PreparationSegment")}
+                    value={selectedMoistureContent?.preparation?.visualNomialPraticalSize} />
+                  <Form.Checkbox label='Material Excluded' checked={selectedMoistureContent?.preparation?.materialExcluded ? true : false}
+                    onChange={(e, v) => updateInfo(v, "toggleMaterialExcluded", "PreparationSegment")}
+                  />
+                  <Form.Input fluid disabled={selectedMoistureContent?.preparation?.materialExcluded ? false : true}
+                    value={selectedMoistureContent?.preparation?.materialExcluded}
+                    onChange={(e, v) => updateInfo(v, "materialExcluded", "PreparationSegment")} />
+                  <Form.Select fluid label='Oven:' options={exampleList.ovenEquipments}
+                    value={selectedMoistureContent?.preparation?.oven?.code}
+                    onChange={(e, v) => updateInfo(v.value, "ovenEquipment", "PreparationSegment")} />
                 </Grid.Column>
               </Grid>
             </Segment>
@@ -82,36 +100,45 @@ export default observer(function MoistureContentDetails() {
             <Segment className="section">
               <Grid columns={2}  >
                 <Grid.Column>
-                  <Form.Input fluid label='Tare ID:' defaultValue={selectedMoistureContent?.tareId} />
-                  <Form.Input fluid label='Tare and Material Wet Mass(g):'
-                    defaultValue={selectedMoistureContent?.tareAndMaterialWetMass}
-                    onChange={(e) => changeInfo(e.target.value, "tareAndMaterialWetMass")} />
+                  <Form.Input fluid label='Tare ID:' defaultValue={selectedMoistureContent?.tareId}
+                    onChange={(e, v) => updateInfo(v, "tareId", "MeasurementsSegment")} />
+
+                  <InputWithMessage label='Tare and Material Wet Mass(g):' key="tareAndMaterialWetMass" extraKey="MeasurementsSegment"
+                  value={selectedMoistureContent?.tareAndMaterialWetMass} changeInfo={updateInfo} />
+
+                  
                 </Grid.Column>
                 <Grid.Column>
-                  <Form.Input fluid label='Tare Mass (g):' defaultValue={selectedMoistureContent?.tareMass}
-                    onChange={(e) => changeInfo(e.target.value, "tareMass")} />
+                  <InputWithMessage label='Tare Mass (g):' key="tareMass" extraKey="MeasurementsSegment" value={selectedMoistureContent?.tareMass}
+                    changeInfo={updateInfo} />
                   <Form.Field>
                     <label>Material wet Mass(g)</label>
-                    <p>{selectedMoistureContent?.tareAndMaterialWetMass}</p>
+                    <p>{selectedMoistureContent?.materialWetMass ?? "N/A"}</p>
                   </Form.Field>
                 </Grid.Column>
               </Grid>
             </Segment>
 
-            <TestedBySegment testerName={selectedMoistureContent?.testerName} dateTested={selectedMoistureContent.dateTested} />
+            <TestedBySegment testerName={selectedMoistureContent?.testerName}
+              dateTested={selectedMoistureContent.dateTested}
+              changeInfo={updateInfo}
+              clear={clearTestBySegment}
+              editModeOrCreateMode={editMode || createMode} />
 
             <Header size="small">Dry Mass</Header>
             <Segment className="section">
               <Grid columns={2}  >
                 <Grid.Column>
-                  <Form.Select fluid label={'Balance:'} options={exmapleList.balanceEquipments} />
+                  <Form.Select fluid label={'Balance:'} options={exampleList.balanceEquipments} value={selectedMoistureContent?.preparation?.balance?.code}
+                    onChange={(e, v) => updateInfo(v.value, "dryMassBalance", "DryMassSegment")} />
+
                   <Form.Input fluid label={'Tare and Material Dry Mass(g):'} defaultValue={selectedMoistureContent?.tareAndMaterialDryMass}
-                    onChange={(e) => changeInfo(e.target.value, "tareAndMaterialDryMass")} />
+                    onChange={(e) => updateInfo(e.target.value, "tareAndMaterialDryMass")} />
                 </Grid.Column>
                 <Grid.Column>
                   <Form.Field>
                     <label>Material Dry Mass(g)</label>
-                    <p>{selectedMoistureContent?.materialDryMass}</p>
+                    <p>{selectedMoistureContent?.materialDryMass ?? "N/A"}</p>
                   </Form.Field>
                 </Grid.Column>
               </Grid>
@@ -121,13 +148,24 @@ export default observer(function MoistureContentDetails() {
               insufficientSampleMass={selectedMoistureContent?.selectInsufficientSampleMass}
               dryingTemperature={selectedMoistureContent?.selectDryingTemperature}
               materialExcluded={selectedMoistureContent?.selectMaterialExcluded}
-              changeInfo={changeInfo} />
+              changeInfo={updateInfo}
+            />
 
             <RemarksSegment checkedBy={selectedMoistureContent?.checkerName}
               dateChecked={selectedMoistureContent?.dateChecked}
               content={selectedMoistureContent.remarks}
-              changeInfo={changeInfo} />
-            <Button primary floated='right' >Update</Button>
+              changeInfo={updateInfo}
+              editModeOrCreateMode={editMode || createMode}
+              clear={clearRemarks} />
+            {!createMode && !editMode &&
+              <Button primary floated='right' onClick={() => setEditMode(true)}> Edit</Button>
+            }
+            {createMode &&
+              <Button primary floated='right' onClick={() => createMoistureContent(selectedMoistureContent)}>Submit </Button>
+            }
+            {editMode &&
+              <Button primary floated='right' onClick={() => updateMoistureContent(selectedMoistureContent)}>Update</Button>
+            }
           </Form>
         </>
       }

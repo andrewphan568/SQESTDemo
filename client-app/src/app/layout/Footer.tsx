@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { Container, Menu, Divider, List, Image, Segment } from 'semantic-ui-react';
+import { Container, Divider, List, Image } from 'semantic-ui-react';
 
 export default function Footer() {
     return (

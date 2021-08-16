@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Header, Icon, Segment } from 'semantic-ui-react';
 
-export default function BadRequestPage() {
+export default function SeverErrorPage() {
     return (
         <Segment placeholder>
             <Header icon>
-                <Icon name='exclamation' />
-                Oops - Four Oh Oh - Bad Request.
+                <Icon name='server' />
+                Oops -Five Oh Oh - Server Error.
             </Header>
 
             <Segment.Inline>
