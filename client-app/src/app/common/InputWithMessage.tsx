@@ -23,7 +23,7 @@ export default observer(function InputWithMessage(props: Props) {
         <>
             <Form.Field error={isError} warning={isWarning}>
                 <label>{label}</label>
-                <input value={value} onChange={(e) => changeInfo(e.target.value, mainKey, extraKey)} />
+                <input type='number' value={value} onChange={(e) => changeInfo(e.target.value, mainKey, extraKey)} />
             </Form.Field >
             {(isError || isWarning) &&
 

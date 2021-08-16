@@ -25,7 +25,7 @@ export default observer(function MoistureContentList() {
                             <Item.Content>
                                 <Item.Header as='a'>{'Project: ' + moistureContent.project?.name}</Item.Header>
                                 <Item.Description>
-                                    <div>{'Water Content (%): ' + moistureContent.waterContentPercentage + ' (%)'}</div>
+                                    <div>{'Water Content (%): ' + moistureContent.waterContentPercentage?.toFixed(2) + ' (%)'}</div>
                                     <div>{'Tested By: ' + moistureContent.testerName}</div>
                                     <div>{'Date Tested: ' + moment(moistureContent.dateTested).format('DD-MM-yyyy')}</div>
                                 </Item.Description>

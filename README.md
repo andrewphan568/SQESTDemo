@@ -1,7 +1,7 @@
 # SQESTDemo
 The simple app is motivated by S-QEST’s Take-Home Coding Challenge. It implements the simple CRUD workflow from backend to frontend and has a few Unit Tests.
 
-There are still some works that need to work on the front end ( testing, clean up code,fix bugs,...), but it is good for a demo purpose.
+There are still many works that need to work on the front end ( implement other functions, testing, clean up codes,fix bugs,...), but it is OK for a demo purpose.
 
 ## Code-Challenge Files
 - Question 1: Moisture Content object model, pls refer to the file MoistureContent.cs (dir SQEST\Domain\Moisture\MoistureContent.cs). Please note that the Moisture Content model is the [tag -finish_code_challege](https://github.com/andrewphan568/SQESTDemo/releases/tag/finish_code_challenge) is so much simple that the updated Moisture Content model in the lasted main branch. The extra field int the lasted model, just simply use to store the data from front-end form.
@@ -19,7 +19,7 @@ The project follows the [Clean Architecture](https://blog.cleancoder.com/uncle-b
 -	ReactTS
 -	[MobX](https://mobx.js.org/README.html) as state management instead of the famous Redux-Saga library.
 -	[React Semantic UI](https://react.semantic-ui.com/) mainly use for theming.
--	[React Router] (https://reactrouter.com/) to navigate components.
+-	[React Router](https://reactrouter.com/) to navigate components.
 
 ### Testing
 There are some simple Unit Tests on the SQEST.Tests project. I use xUnit as the unit test framework for .NET.

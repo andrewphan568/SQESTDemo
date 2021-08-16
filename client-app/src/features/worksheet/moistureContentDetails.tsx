@@ -110,7 +110,7 @@ export default observer(function MoistureContentDetails() {
                     changeInfo={updateInfo} warningMessageMC={massErrors.get("tareMass")} />
                   <Form.Field>
                     <label>Material wet Mass(g)</label>
-                    <p>{selectedMoistureContent?.materialWetMass ?? "N/A"}</p>
+                    <p>{selectedMoistureContent?.materialWetMass?.toFixed(2) ?? "N/A"}</p>
                   </Form.Field>
                 </Grid.Column>
               </Grid>
@@ -134,7 +134,7 @@ export default observer(function MoistureContentDetails() {
                 <Grid.Column>
                   <Form.Field>
                     <label>Material Dry Mass(g)</label>
-                    <p>{selectedMoistureContent?.materialDryMass ?? "N/A"}</p>
+                    <p>{selectedMoistureContent?.materialDryMass?.toFixed(2) ?? "N/A"}</p>
                   </Form.Field>
                 </Grid.Column>
               </Grid>

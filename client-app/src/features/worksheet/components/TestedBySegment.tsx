@@ -29,7 +29,7 @@ export default observer(function TestedBySegment({ testerName, dateTested, editM
                         <Grid.Column>
                             <Form.Field>
                                 <label>Date Tested</label>
-                                <p>{dateTested}</p>
+                                <p>{dateTested ? moment(dateTested).format('DD-MM-yyyy') : ""}</p>
                             </Form.Field>
                         </Grid.Column>
                     </Grid>

@@ -181,7 +181,7 @@ export default class MoistureContentStore {
 
         this.massErrors.clear();
 
-        if (value! instanceof String) {
+        if (isNaN(value)) {
             firstWarningMessage.isError = true;
             firstWarningMessage.message = "Value should be number";
             this.selectedMoistureContent.materialDryMass = undefined;
@@ -189,7 +189,7 @@ export default class MoistureContentStore {
             this.selectedMoistureContent.waterContentPercentage = undefined;
             this.massErrors.set(key, firstWarningMessage);
         }
-        else if (value === null || value === undefined || value === '0') {
+        else if (value === null || value === undefined || value === 0 || value === '0') {
             firstWarningMessage.isWarning = true;
             firstWarningMessage.message = "Tare mass is expected, a missing or 0 tare mass may indicate an issue with the result";
             this.massErrors.set(key, firstWarningMessage)
@@ -197,24 +197,22 @@ export default class MoistureContentStore {
         else if (value === null || value === undefined || value < 0) {
             firstWarningMessage.isError = true;
             firstWarningMessage.message = "Mass cannot be less than 0";
-            this.selectedMoistureContent.materialDryMass = undefined;
-            this.selectedMoistureContent.materialWetMass = undefined;
             this.selectedMoistureContent.waterContentPercentage = undefined;
             this.massErrors.set(key, firstWarningMessage)
         }
         else if (key === "tareMass" || key === "tareAndMaterialWetMass" || key === "tareAndMaterialDryMass") {
             if (this.selectedMoistureContent.tareMass >= this.selectedMoistureContent.tareAndMaterialWetMass) {
                 firstWarningMessage.isError = true;
-                this.selectedMoistureContent.materialWetMass = undefined;
                 this.selectedMoistureContent.waterContentPercentage = undefined;
+                this.selectedMoistureContent.materialWetMass = undefined;
                 firstWarningMessage.message = "Tare and wet mass must be greater than tare mass,cannot calculate a result";
 
                 this.massErrors.set("tareAndMaterialWetMass", firstWarningMessage)
             }
             else if (this.selectedMoistureContent.tareMass >= this.selectedMoistureContent.tareAndMaterialDryMass) {
                 firstWarningMessage.isError = true;
-                this.selectedMoistureContent.materialDryMass = undefined;
                 this.selectedMoistureContent.waterContentPercentage = undefined;
+                this.selectedMoistureContent.materialDryMass = undefined;
                 firstWarningMessage.message = "Tare and dry mass must be greater than tare mass, cannot calculate a result";
                 this.massErrors.set("tareAndMaterialDryMass", firstWarningMessage)
             }
@@ -224,13 +222,13 @@ export default class MoistureContentStore {
                 firstWarningMessage.message = "Dry mass greater than wet mass, cannot calculate a result";
                 this.massErrors.set("tareAndMaterialDryMass", firstWarningMessage)
             }
-            else {
-                this.selectedMoistureContent.materialDryMass =
-                    this.selectedMoistureContent.tareAndMaterialDryMass - this.selectedMoistureContent.tareMass;
 
-                this.selectedMoistureContent.materialWetMass =
-                    this.selectedMoistureContent.tareAndMaterialWetMass - this.selectedMoistureContent.tareMass;
-            }
+            this.selectedMoistureContent.materialDryMass =
+                this.selectedMoistureContent.tareAndMaterialDryMass - this.selectedMoistureContent.tareMass;
+
+            this.selectedMoistureContent.materialWetMass =
+                this.selectedMoistureContent.tareAndMaterialWetMass - this.selectedMoistureContent.tareMass;
+
         }
 
         if (!firstWarningMessage.isError) {
@@ -340,13 +338,13 @@ export default class MoistureContentStore {
                 this.selectedMoistureContent.tareId = newValue;
             }
             else if (key === "tareMass") {
-                this.selectedMoistureContent.tareMass = newValue;
-                this.validateMassInput("tareMass", newValue);
+                this.selectedMoistureContent.tareMass = Number(newValue);
+                this.validateMassInput("tareMass", Number(newValue));
 
             }
             else if (key === "tareAndMaterialWetMass") {
-                this.selectedMoistureContent.tareAndMaterialWetMass = newValue;
-                this.validateMassInput("tareAndMaterialWetMass", newValue)
+                this.selectedMoistureContent.tareAndMaterialWetMass = Number(newValue as string);
+                this.validateMassInput("tareAndMaterialWetMass", Number(newValue as string))
             }
 
         }
@@ -364,8 +362,8 @@ export default class MoistureContentStore {
         //DryMassSegment
         else if (extraKey === "DryMassSegment") {
             if (key === "tareAndMaterialDryMass") {
-                this.selectedMoistureContent.tareAndMaterialDryMass = newValue;
-                this.validateMassInput("tareAndMaterialDryMass", newValue)
+                this.selectedMoistureContent.tareAndMaterialDryMass = Number(newValue as string);
+                this.validateMassInput("tareAndMaterialDryMass", Number(newValue as string));
             }
             else if (key === "dryMassBalance") {
                 this.selectedMoistureContent.preparation.balance = newValue;// temporarily use the same balance equipment

@@ -128,7 +128,7 @@ export default observer(function TestSubjectSegment({
                             </Form.Group>
 
                             <Form.Group widths='equal'>
-                                <Form.Input type='date' fluid label="Sampled Date" value={sampledDate ?? undefined}
+                                <Form.Input type='date' fluid label="Sampled Date" value={sampledDate ? moment(sampledDate).format('yyyy-MM-DD') : undefined}
                                     onChange={(e) => changeInfo(e.target.value, "sampledDate", "TestSubjectSegment")}
                                 />
                                 <Form.Input fluid label="Sampled By" value={sampledBy ?? ""}
