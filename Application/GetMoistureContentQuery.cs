@@ -42,6 +42,8 @@ namespace Application
                                        .Include(m => m.SourceMaterial)
                                        .Include(m => m.Specification)
                                        .Include(m => m.Preparation)
+                                       .Include(m => m.Preparation.Balance)
+                                       .Include(m => m.Preparation.Oven)
                                        .Include(m => m.Sample)
                                        .Include(m => m.StandardTestMethod)
                                        .SingleOrDefaultAsync(m => m.Id == request.Id);

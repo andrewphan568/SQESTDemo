@@ -158,10 +158,11 @@ namespace Persistence
                     Method = "B",
                     DryingTemperature = 100,
                     Balance = balanceEquipment1,
+                    Oven = ovenEquipment1,
                     CreatedAtUtc = new DateTime(2021, 08, 15),
                     UpdatedAtUtc = new DateTime(2021, 08, 15),
-                    MaterialExcluded = "Rock",
-                    VisualNomialPraticalSize = 75,
+                    MaterialExcluded = "Rock 1",
+                    VisualNomialPraticalSize = "2\" (51mm)"
                 };
 
                 var preparation2 = new Preparation()
@@ -170,8 +171,11 @@ namespace Persistence
                     Method = "A",
                     DryingTemperature = 90,
                     Balance = balanceEquipment2,
+                    Oven = ovenEquipment2,
                     CreatedAtUtc = new DateTime(2021, 08, 15),
-                    UpdatedAtUtc = new DateTime(2021, 08, 15)
+                    UpdatedAtUtc = new DateTime(2021, 08, 15),
+                    MaterialExcluded = "Rock 2",
+                    VisualNomialPraticalSize = "3\" (75mm)"
                 };
 
                 var standardTestMethod1 = new StandardTestMethod()
@@ -199,6 +203,7 @@ namespace Persistence
                     TareAndMaterialWetMass = 2859.6,
                     TareAndMaterialDryMass = 2525.7,
                     MaterialDryMass = 2225.7,
+                    MaterialWetMass = 2559.6,
                     WaterContentPercentage = 15,
                     TesterName = "Julia Phan",
                     CheckerName = "Andrew Phan",
@@ -224,7 +229,8 @@ namespace Persistence
                     TareMass = 300.0,
                     TareAndMaterialWetMass = 4000.0,
                     TareAndMaterialDryMass = 3260.0,
-                    MaterialDryMass = 2960,
+                    MaterialDryMass = 2960.0,
+                    MaterialWetMass = 3700.0,
                     WaterContentPercentage = 25,
                     TesterName = "David Phan",
                     CheckerName = "Quoc Phan",
@@ -249,6 +255,7 @@ namespace Persistence
                     TareAndMaterialWetMass = 2859.6,
                     TareAndMaterialDryMass = 2525.7,
                     MaterialDryMass = 2225.7,
+                    MaterialWetMass = 2559.6,
                     WaterContentPercentage = 15.0,
                     TesterName = "Lee Phan",
                     CheckerName = "Noea Phan",
@@ -273,6 +280,7 @@ namespace Persistence
                     TareAndMaterialWetMass = 4000.0,
                     TareAndMaterialDryMass = 3200.0,
                     MaterialDryMass = 2900,
+                    MaterialWetMass = 3700.0,
                     WaterContentPercentage = 27.6,
                     TesterName = "Olivia Phan",
                     CheckerName = "Willow Phan",

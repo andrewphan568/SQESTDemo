@@ -33,6 +33,8 @@ namespace Application.MoistureContents
                                         .Include(m => m.Specification)
                                         .Include(m => m.Sample)
                                         .Include(m => m.Preparation)
+                                        .Include(m => m.Preparation.Balance)
+                                        .Include(m => m.Preparation.Oven)
                                         .Include(m => m.StandardTestMethod)
                                         .ToListAsync();
 

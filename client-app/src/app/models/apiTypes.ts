@@ -57,23 +57,6 @@ export class Sample implements Sample {
     }
 }
 
-export interface Preparation {
-    id: string;
-    method: string;
-    dryingTemperature: number;
-    balance?: any;
-    visualNomialPraticalSize: number;
-    materialExcluded?: any;
-    createdAtUtc: Date;
-    updatedAtUtc: Date;
-}
-
-export class Preparation implements Preparation {
-    constructor(init?: Preparation) {
-        Object.assign(this, init);
-    }
-}
-
 
 export interface StandardTestMethod {
     id: string;
@@ -103,16 +86,17 @@ export interface MoistureContent {
     tareMass: number;
     tareAndMaterialWetMass: number;
     tareAndMaterialDryMass: number;
-    materialDryMass: number;
-    waterContentPercentage: number;
+    materialDryMass: number | undefined;
+    materialWetMass: number | undefined;
+    waterContentPercentage: number | undefined;
     selectInsufficientSampleMass: boolean;
     selectDryingTemperature: boolean;
     selectMaterialExcluded: boolean;
     testerName: string;
-    dateTested: Date;
+    dateTested: Date | undefined;
     remarks?: any;
     checkerName: string;
-    dateChecked: Date;
+    dateChecked: Date | undefined;
 }
 
 export class MoistureContent implements MoistureContent {
@@ -120,3 +104,62 @@ export class MoistureContent implements MoistureContent {
         Object.assign(this, init);
     }
 }
+
+export interface Balance {
+    id: string;
+    name: string;
+    code: string;
+    manufactureDate: Date;
+    createdAtUtc: Date;
+    updatedAtUtc: Date;
+}
+export class Balance implements Balance {
+    constructor(init?: Balance) {
+        Object.assign(this, init);
+    }
+}
+
+export interface Oven {
+    id: string;
+    name: string;
+    code: string;
+    manufactureDate: Date;
+    createdAtUtc: Date;
+    updatedAtUtc: Date;
+}
+
+export class Oven implements Oven {
+    constructor(init?: Oven) {
+        Object.assign(this, init);
+    }
+}
+
+export interface Preparation {
+    id: string;
+    method: string;
+    dryingTemperature: number;
+    balance: Balance;
+    oven: Oven;
+    visualNomialPraticalSize: string;
+    materialExcluded?: any;
+    createdAtUtc: Date;
+    updatedAtUtc: Date;
+}
+export class Preparation implements Preparation {
+    constructor(init?: Preparation) {
+        Object.assign(this, init);
+    }
+}
+
+export interface WarningMessageMC {
+    isError?: boolean;
+    isWarning?: boolean;
+    message?: string;
+}
+export class WarningMessageMC implements WarningMessageMC {
+    constructor(init?: WarningMessageMC) {
+        Object.assign(this, init);
+    }
+}
+
+

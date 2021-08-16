@@ -20,17 +20,17 @@ namespace API.DTOs
 
         public double TareAndMaterialDryMass { get; set; }
         public double MaterialDryMass { get; set; }
-
+        public double MaterialWetMass { get; set; }
         public double WaterContentPercentage { get; set; }
         public bool SelectInsufficientSampleMass { get; set; }
         public bool SelectDryingTemperature { get; set; }
         public bool SelectMaterialExcluded { get; set; }
 
-        public string TesterName { get; set; } 
+        public string TesterName { get; set; }
         public DateTime DateTested { get; set; }
 
         public string Remarks { get; set; }
-        public string CheckerName { get; set; } 
+        public string CheckerName { get; set; }
         public DateTime DateChecked { get; set; }
     }
 }

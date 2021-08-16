@@ -18,16 +18,17 @@ namespace Domain.Moisture
         public double TareAndMaterialWetMass { get; set; }
 
         public double TareAndMaterialDryMass { get; set; }
+        public double MaterialWetMass { get; set; }
         public double MaterialDryMass { get; set; }
 
         public double WaterContentPercentage { get; set; }
-        public bool SelectInsufficientSampleMass { get; set; } 
+        public bool SelectInsufficientSampleMass { get; set; }
         public bool SelectDryingTemperature { get; set; }
         public bool SelectMaterialExcluded { get; set; }
 
         public string TesterName { get; set; } // should use AppUser? or  create another Laboratory Staff table ?
         public DateTime DateTested { get; set; }
-         
+
         public string Remarks { get; set; }
         public string CheckerName { get; set; } // should use AppUser? or  create another Laboratory Staff table ?
         public DateTime DateChecked { get; set; }
