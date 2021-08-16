@@ -3,6 +3,11 @@ The simple app is motivated by S-QEST’s Take-Home Coding Challenge. It impleme
 
 There are still many works that need to work on the front end ( implement other functions, testing, clean up codes,fix bugs,...), but it is OK for a demo purpose.
 
+
+https://user-images.githubusercontent.com/72535251/129638105-cff39b8a-9846-4052-be0c-2b311cc90076.mp4
+
+
+
 ## Code-Challenge Files
 - Question 1: Moisture Content object model, pls refer to the file MoistureContent.cs (dir SQEST\Domain\Moisture\MoistureContent.cs). Please note that the Moisture Content model is the [tag -finish_code_challege](https://github.com/andrewphan568/SQESTDemo/releases/tag/finish_code_challenge) is so much simple that the updated Moisture Content model in the lasted main branch. The extra field int the lasted model, just simply use to store the data from front-end form.
 - Question 2: Calculates Material Wet Mass, Material Dry Mass and Water Content, pls refer to the file MoistureContentCalculator.cs ( dir SQEST\Application\Helpers\MoistureContentCalculator.cs)
